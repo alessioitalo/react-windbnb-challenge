@@ -12,9 +12,9 @@ const StyledContainer = styled.section`
   column-gap: 1.5%;
 `;
 
-const Container = ({ city }) => {
+const Container = ({ city, guests }) => {
   const filteredStays = stays.filter((stay) => {
-    return stay.city === city;
+    return stay.city === city && stay.maxGuests >= guests;
   });
   return (
     <StyledContainer>
