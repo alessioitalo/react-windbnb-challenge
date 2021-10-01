@@ -3,6 +3,16 @@ import Container from './components/Container';
 import Refine from './components/Refine';
 import Backdrop from './Backdrop';
 import { useState } from 'react';
+import styled from 'styled-components';
+
+
+const StyledModal = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+`
 
 function App() {
   const [city, setCity] = useState('Oulu');
@@ -24,19 +34,17 @@ function App() {
   return (
     <div className='App'>
       {refineSearch && (
-        <Backdrop toggleRefineSearch={refineSearchHandler}>
+        <StyledModal>
           <Refine
             setCityHandler={setCityHandler}
             setGuestsHandler={setGuestsHandler}
             toggleRefineSearch={refineSearchHandler}
           />
-        </Backdrop>
+          <Backdrop toggleRefineSearch={refineSearchHandler} />
+        </StyledModal>
       )}
-      <Header
-        city={city}
-        toggleRefineSearch={refineSearchHandler}
-      />
-      <Container city={city} guests={guests}/>
+      <Header city={city} toggleRefineSearch={refineSearchHandler} />
+      <Container city={city} guests={guests} />
     </div>
   );
 }

@@ -67,10 +67,7 @@ const Header = ({ city, toggleRefineSearch }) => {
           </span>
         </StyledSearch>
       </StyledHeader>
-      <StyledSubHeader>
-        <span className='subheader'>Stays in Finland </span>
-        <span>12+ stays</span>
-      </StyledSubHeader>
+
     </>
   );
 };

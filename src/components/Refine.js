@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import MiniButton from './MiniButton';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 
 const StyledRefineSearchBar = styled.div`
   position: absolute;
@@ -9,12 +10,31 @@ const StyledRefineSearchBar = styled.div`
   top: 0;
   left: 0;
   background: white;
-  z-index: 2;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  height: 45%;
   width: 100%;
-  height: 40vh;
+
+  & .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & .bottom {
+    width: 60%;
+    display: flex;
+    margin-left: 5%;
+    color: #4f4f4f;
+  }
+
+  & .bottom span {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 30px;
+    width: 100%;
+  }
 
   & form {
     margin-top: 90px;
@@ -33,7 +53,7 @@ const StyledRefineSearchBar = styled.div`
     font-weight: normal;
   }
 
-  & button {
+  & .btn {
     width: 127px;
     padding: 0 24px;
     height: 48px;
@@ -48,21 +68,13 @@ const StyledRefineSearchBar = styled.div`
     cursor: pointer;
   }
 
-  & span {
-    ${'' /* background: yellow; */}
+  & .top span {
     width: 100%;
     border-right: 1px solid #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-  }
-
-  ${
-    '' /* & .test-span{
-    background: yellow;
-
-  } */
   }
 
   & input {
@@ -91,35 +103,99 @@ const StyledRefineSearchBar = styled.div`
   & input::active {
     border: 1px solid #333333;
   }
+
+  & .guest-counter {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-const Refine = ({setCityHandler, setGuestsHandler, toggleRefineSearch}) => {
+const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
   const cityRef = useRef();
   const guestsRef = useRef();
+  const [adults, setAdults] = useState(0);
+  const [kids, setKids] = useState(0);
+
+  const increaseAdultsHandler = ()=>{
+    setAdults(adults + 1)
+    setGuestsHandler(adults + kids)
+  }
+
+  const decreaseAdultsHandler = ()=>{
+    setAdults(adults - 1)
+    setGuestsHandler(adults + kids)
+  }
+
+  const decreaseKidsHandler = ()=>{
+    setKids(kids - 1)
+    setGuestsHandler(adults + kids)
+  }
+
+  const increaseKidsHandler = ()=>{
+    setKids(kids + 1)
+    setGuestsHandler(adults + kids)
+  }
+
   const refineSubmitHandler = (e) => {
     e.preventDefault();
     setCityHandler(cityRef.current.value);
     setGuestsHandler(guestsRef.current.value);
-    toggleRefineSearch(false)
+    toggleRefineSearch(false);
   };
   return (
     <StyledRefineSearchBar>
-      <form onSubmit={refineSubmitHandler}>
+      <div className='top'>
+        <form onSubmit={refineSubmitHandler}>
+          <span>
+            <label>LOCATION</label>
+            <input ref={cityRef} />
+          </span>
+          <span>
+            <label>GUESTS</label>
+            <input ref={guestsRef}/>
+            {/* value={kids + adults} */}
+          </span>
+          <span>
+            <button className='btn'>
+              <FontAwesomeIcon icon={faSearch} color='white' />
+              Search
+            </button>
+          </span>
+        </form>
+      </div>
+      <div className='bottom'>
         <span>
-          <label>LOCATION</label>
-          <input ref={cityRef} />
+          <ul>
+            <li>
+              <FontAwesomeIcon icon={faMapMarker} /> Helsinki, Finland
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faMapMarker} /> Turku, Finland
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faMapMarker} /> Oulu, Finland
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faMapMarker} /> Vaasa, Finland
+            </li>
+          </ul>
         </span>
-        <span>
-          <label>GUESTS</label>
-          <input ref={guestsRef} />
+        <span className='guest-counter'>
+          <div>
+            <div>Adults</div> <div>Ages 13 or above</div>
+            <MiniButton sign='-' onClick={decreaseAdultsHandler}/>
+            {adults > 0 ? adults : 0}
+            <MiniButton sign='+' onClick={increaseAdultsHandler} />
+          </div>
+          <div>
+            <div>Children</div>
+            <div>Ages 2-12</div>
+            <MiniButton sign='-' onClick={decreaseKidsHandler} />
+            {kids > 0 ? kids : 0}
+            <MiniButton sign='+' onClick={increaseKidsHandler} />
+          </div>
         </span>
-        <span>
-          <button>
-            <FontAwesomeIcon icon={faSearch} color='white' />
-            Search
-          </button>
-        </span>
-      </form>
+      </div>
     </StyledRefineSearchBar>
   );
 };

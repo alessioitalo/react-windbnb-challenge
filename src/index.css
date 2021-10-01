@@ -2,41 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;900&display=swap');
 
+*{
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
 }
-/* 
-ul {
-  padding-left: 24px;
-}
 
-li {
-  margin-bottom: 8px;
-}
-
-.welcome {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.welcome-text {
-  margin-top: 30vh;
-  font-weight: 500;
-}
-
-.welcome-text p {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.welcome-text h1 {
-  font-size: 1.5rem;
-}
-
-.welcome-text a {
-  color: #f7542e;
-} */
-
-.sub-header {
+ul{
+  list-style: none;
+  padding: 0;
+  line-height: 2rem;
 }
