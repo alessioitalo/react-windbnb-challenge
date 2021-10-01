@@ -5,10 +5,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 const StyledStay = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-  padding-bottom: 49px;
+  padding: 1rem 0;
 
   &:hover{
     & .photo-overlay{
@@ -21,10 +21,9 @@ const StyledStay = styled.div`
     box-sizing: border-box;
     border-radius: 12px;
     font-family: Montserrat;
-    font-style: normal;
     font-weight: bold;
     font-size: 12px;
-    line-height: 15px;
+    ${'' /* line-height: 15px; */}
     padding: 8px 5px;
     margin-right: 15px;
   }
@@ -55,22 +54,18 @@ const StyledStay = styled.div`
 
   & .info {
     font-family: Montserrat;
-    font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    line-height: 17px;
   }
 
   & .rating {
     font-family: Montserrat;
-    font-style: normal;
     font-weight: 500;
     font-size: 14px;
   }
 
   & .description {
     font-family: Montserrat;
-    font-style: normal;
     font-weight: 600;
     font-size: 16px;
     align-self: flex-start;

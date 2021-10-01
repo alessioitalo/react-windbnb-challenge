@@ -12,45 +12,28 @@ const StyledRefineSearchBar = styled.div`
   background: white;
   display: flex;
   flex-direction: column;
-  height: 45%;
+  min-height: 40%;
   width: 100%;
 
   & .top {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
   }
 
-  & .bottom {
-    width: 60%;
-    display: flex;
-    margin-left: 5%;
-    color: #4f4f4f;
-  }
-
-  & .bottom span {
-    display: flex;
-    justify-content: flex-start;
-    padding: 10px 30px;
-    width: 100%;
-  }
-
   & form {
-    margin-top: 90px;
-    height: 60px;
+    margin: 30px 0;
     width: 90%;
     display: flex;
     justify-content: center;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
-    font-family: Mulish;
   }
 
   & form,
-  & button {
+  & .btn,
+  & input,
+  & span {
     font-family: Mulish;
-    font-weight: normal;
   }
 
   & .btn {
@@ -68,6 +51,10 @@ const StyledRefineSearchBar = styled.div`
     cursor: pointer;
   }
 
+  & .btn:hover {
+    background: #bb4444;
+  }
+
   & .top span {
     width: 100%;
     border-right: 1px solid #f2f2f2;
@@ -79,45 +66,53 @@ const StyledRefineSearchBar = styled.div`
 
   & input {
     border: none;
-    padding: -10px -30px;
     height: 100%;
     width: 100%;
     border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     padding: 0 20px;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   & label {
     position: absolute;
     left: 20px;
-    top: 5px;
+    top: 0;
     font-weight: 800;
-    font-size: 12px;
-    color: black;
-    align-self: flex-start;
+    font-size: 10px;
   }
 
   & input::active {
     border: 1px solid #333333;
   }
 
-  & .guest-counter {
+  & .bottom {
+    width: 60%;
+    display: flex;
+    margin-left: 5%;
+    color: #4f4f4f;
+  }
+
+  & .bottom-half {
+    padding: 10px 20px;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
+
+  & .counter {
+    padding: 0 10px;
+    font-weight: 700;
+  }
+  & .bold {
+    font-weight: 700;
+    color: black;
+  }
+  & .guests-counter{
+    padding: 20px 0;
+  }
 `;
 
-const Refine = ({
-  setCityHandler,
-  setGuestsHandler,
-  toggleRefineSearch,
-  city,
-}) => {
-  // const cityRef = useRef();
-  // const guestsRef = useRef();
+const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
   const [showLocations, setShowLocations] = useState(false);
   const [showGuests, setShowGuest] = useState(false);
   const [adults, setAdults] = useState(null);
@@ -157,9 +152,9 @@ const Refine = ({
   const refineSubmitHandler = (e) => {
     e.preventDefault();
     toggleRefineSearch(false);
-    setKids(null)
-    setAdults(null)
-    setTemporaryCity(null)
+    setKids(null);
+    setAdults(null);
+    setTemporaryCity(null);
     setGuestsHandler(adults + kids);
     setCityHandler(temporaryCity);
   };
@@ -170,18 +165,16 @@ const Refine = ({
           <span>
             <label>LOCATION</label>
             <input
-              // placeholder='Choose location'
               readOnly
-              value={temporaryCity? temporaryCity : 'Choose location'}
+              value={temporaryCity ? temporaryCity : 'Choose location'}
               onFocus={locationOpacityHandler}
             />
           </span>
           <span>
             <label>GUESTS</label>
             <input
-            // placeholder='Add guests'
               readOnly
-              value={kids || adults ? kids + adults : 'Add guests'} 
+              value={kids || adults ? kids + adults : 'Add guests'}
               onFocus={guestsOpacityHandler}
             />
           </span>
@@ -194,36 +187,47 @@ const Refine = ({
         </form>
       </div>
       <div className='bottom'>
-        <span style={{ opacity: `${showLocations ? 1 : 0}` }}>
+        <span
+          className='bottom-half'
+          style={{ visibility: `${showLocations ? 'visible' : 'hidden'}` }}
+        >
           <ul>
             <li onClick={() => setTemporaryCity('Helsinki')}>
-              <FontAwesomeIcon icon={faMapMarker} /> Helsinki, Finland
+              <FontAwesomeIcon icon={faMapMarker} />{' '}
+              <span>Helsinki, Finland</span>
             </li>
             <li onClick={() => setTemporaryCity('Turku')}>
-              <FontAwesomeIcon icon={faMapMarker} /> Turku, Finland
+              <FontAwesomeIcon icon={faMapMarker} /> <span>Turku, Finland</span>
             </li>
             <li onClick={() => setTemporaryCity('Oulu')}>
-              <FontAwesomeIcon icon={faMapMarker} /> Oulu, Finland
+              <FontAwesomeIcon icon={faMapMarker} /> <span>Oulu, Finland</span>
             </li>
             <li onClick={() => setTemporaryCity('Vaasa')}>
-              <FontAwesomeIcon icon={faMapMarker} /> Vaasa, Finland
+              <FontAwesomeIcon icon={faMapMarker} /> <span>Vaasa, Finland</span>
             </li>
           </ul>
         </span>
         <span
-          className='guest-counter'
+          className='bottom-half'
           style={{ opacity: `${showGuests ? 1 : 0}` }}
         >
           <div>
-            <div>Adults</div> <div>Ages 13 or above</div>
-            <MiniButton sign='-' onClick={decreaseAdultsHandler} /> {adults || '0'}
-            <MiniButton sign='+' onClick={increaseAdultsHandler} />
+            <div className='text bold'>Adults</div>
+            <div>Ages 13 or above</div>
+            <div className='guests-counter'>
+              <MiniButton sign='-' onClick={decreaseAdultsHandler} />
+              <span className='counter'>{adults || '0'}</span>
+              <MiniButton sign='+' onClick={increaseAdultsHandler} />
+            </div>
           </div>
           <div>
-            <div>Children</div>
-            <div>Ages 2-12</div>
-            <MiniButton sign='-' onClick={decreaseKidsHandler} /> {kids || '0'}
-            <MiniButton sign='+' onClick={increaseKidsHandler} />
+            <div className='text bold'>Children</div>
+            <div className='text'>Ages 2-12</div>
+            <div className='guests-counter'>
+              <MiniButton sign='-' onClick={decreaseKidsHandler} />
+              <span className='counter'>{kids || '0'}</span>
+              <MiniButton sign='+' onClick={increaseKidsHandler} />
+            </div>
           </div>
         </span>
       </div>
