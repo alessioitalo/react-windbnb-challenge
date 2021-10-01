@@ -38,13 +38,23 @@ function App() {
             setGuestsHandler={setGuestsHandler}
             toggleRefineSearch={refineSearchHandler}
             city={city}
-            // guests={guests}
           />
           <Backdrop toggleRefineSearch={refineSearchHandler} />
         </StyledModal>
       )}
       <Header city={city} toggleRefineSearch={refineSearchHandler} />
       <Container city={city} guests={guests} />
+      <footer>
+        <div align='center'>
+          coded by <a href='https://www.alessioitalo.uk/'>alessioitalo</a>
+        </div>
+        <div align='center'>
+          Solution for a challenge from{' '}
+          <a href='http://devchallenges.io' target='_blank'>
+            Devchallenges.io
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

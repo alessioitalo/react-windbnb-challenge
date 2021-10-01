@@ -11,6 +11,11 @@ const StyledContainer = styled.section`
   grid-template-rows: 1fr 1fr;
   column-gap: 1.5%;
 
+  @media (max-width: 600px){
+    display: flex;
+    flex-direction: column;
+  }
+
   & .error {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -22,9 +27,14 @@ const StyledSubHeader = styled.div`
   display: flex;
   width: 90%;
   justify-content: space-between;
+  align-items: center;
   position: relative;
   margin: auto;
   padding-bottom: 32px;
+
+  @media (max-width: 600px){
+    padding: 0;
+  }  
 
   & .subheader {
     font-weight: 700;

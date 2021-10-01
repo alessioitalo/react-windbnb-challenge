@@ -14,6 +14,18 @@ const StyledHeader = styled.header`
   & img{
     width: 15%;
   }
+
+  @media (max-width: 600px){
+    padding: 20px 0;
+    flex-direction: column;
+
+    & img{
+      width: 40%;
+      margin: 20px 0;
+      ${'' /* position: relative;
+      bottom: 10%; */}
+    }
+  }
 `;
 
 
