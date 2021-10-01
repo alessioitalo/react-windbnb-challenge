@@ -16,19 +16,6 @@ const StyledHeader = styled.header`
   }
 `;
 
-const StyledSubHeader = styled.div`
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
-  position: relative;
-  margin: auto;
-  padding-bottom: 32px;
-
-  & .subheader {
-    font-weight: 700;
-    font-size: 24px;
-  }
-`;
 
 const StyledSearch = styled.div`
   cursor: pointer;
@@ -60,14 +47,13 @@ const Header = ({ city, toggleRefineSearch }) => {
       <StyledHeader>
         <img src={logo} alt='logo' />
         <StyledSearch onClick={refineSearchHandler}>
-          <span>{city}, Finland</span>
+          <span>{city? `${city}, Finland` : `Finland`}</span>
           <span className='guest'>Add Guest</span>
           <span className='fa-span'>
             <FontAwesomeIcon icon={faSearch} color='#EB5757' />
           </span>
         </StyledSearch>
       </StyledHeader>
-
     </>
   );
 };

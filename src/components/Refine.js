@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import MiniButton from './MiniButton';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -110,37 +110,58 @@ const StyledRefineSearchBar = styled.div`
   }
 `;
 
-const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
-  const cityRef = useRef();
-  const guestsRef = useRef();
-  const [adults, setAdults] = useState(0);
-  const [kids, setKids] = useState(0);
+const Refine = ({
+  setCityHandler,
+  setGuestsHandler,
+  toggleRefineSearch,
+  city,
+}) => {
+  // const cityRef = useRef();
+  // const guestsRef = useRef();
+  const [showLocations, setShowLocations] = useState(false);
+  const [showGuests, setShowGuest] = useState(false);
+  const [adults, setAdults] = useState(null);
+  const [kids, setKids] = useState(null);
+  const [temporaryCity, setTemporaryCity] = useState('');
 
-  const increaseAdultsHandler = ()=>{
-    setAdults(adults + 1)
-    setGuestsHandler(adults + kids)
-  }
+  const increaseAdultsHandler = () => {
+    setAdults(adults + 1);
+  };
 
-  const decreaseAdultsHandler = ()=>{
-    setAdults(adults - 1)
-    setGuestsHandler(adults + kids)
-  }
+  const decreaseAdultsHandler = () => {
+    if (adults > 0) {
+      setAdults(adults - 1);
+    }
+  };
 
-  const decreaseKidsHandler = ()=>{
-    setKids(kids - 1)
-    setGuestsHandler(adults + kids)
-  }
+  const decreaseKidsHandler = () => {
+    if (kids > 0) {
+      setKids(kids - 1);
+    }
+  };
 
-  const increaseKidsHandler = ()=>{
-    setKids(kids + 1)
-    setGuestsHandler(adults + kids)
-  }
+  const increaseKidsHandler = () => {
+    setKids(kids + 1);
+  };
+
+  const locationOpacityHandler = () => {
+    setShowLocations(true);
+    setShowGuest(false);
+  };
+
+  const guestsOpacityHandler = () => {
+    setShowLocations(false);
+    setShowGuest(true);
+  };
 
   const refineSubmitHandler = (e) => {
     e.preventDefault();
-    setCityHandler(cityRef.current.value);
-    setGuestsHandler(guestsRef.current.value);
     toggleRefineSearch(false);
+    setKids(null)
+    setAdults(null)
+    setTemporaryCity(null)
+    setGuestsHandler(adults + kids);
+    setCityHandler(temporaryCity);
   };
   return (
     <StyledRefineSearchBar>
@@ -148,12 +169,21 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
         <form onSubmit={refineSubmitHandler}>
           <span>
             <label>LOCATION</label>
-            <input ref={cityRef} />
+            <input
+              // placeholder='Choose location'
+              readOnly
+              value={temporaryCity? temporaryCity : 'Choose location'}
+              onFocus={locationOpacityHandler}
+            />
           </span>
           <span>
             <label>GUESTS</label>
-            <input ref={guestsRef}/>
-            {/* value={kids + adults} */}
+            <input
+            // placeholder='Add guests'
+              readOnly
+              value={kids || adults ? kids + adults : 'Add guests'} 
+              onFocus={guestsOpacityHandler}
+            />
           </span>
           <span>
             <button className='btn'>
@@ -164,34 +194,35 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
         </form>
       </div>
       <div className='bottom'>
-        <span>
+        <span style={{ opacity: `${showLocations ? 1 : 0}` }}>
           <ul>
-            <li>
+            <li onClick={() => setTemporaryCity('Helsinki')}>
               <FontAwesomeIcon icon={faMapMarker} /> Helsinki, Finland
             </li>
-            <li>
+            <li onClick={() => setTemporaryCity('Turku')}>
               <FontAwesomeIcon icon={faMapMarker} /> Turku, Finland
             </li>
-            <li>
+            <li onClick={() => setTemporaryCity('Oulu')}>
               <FontAwesomeIcon icon={faMapMarker} /> Oulu, Finland
             </li>
-            <li>
+            <li onClick={() => setTemporaryCity('Vaasa')}>
               <FontAwesomeIcon icon={faMapMarker} /> Vaasa, Finland
             </li>
           </ul>
         </span>
-        <span className='guest-counter'>
+        <span
+          className='guest-counter'
+          style={{ opacity: `${showGuests ? 1 : 0}` }}
+        >
           <div>
             <div>Adults</div> <div>Ages 13 or above</div>
-            <MiniButton sign='-' onClick={decreaseAdultsHandler}/>
-            {adults > 0 ? adults : 0}
+            <MiniButton sign='-' onClick={decreaseAdultsHandler} /> {adults || '0'}
             <MiniButton sign='+' onClick={increaseAdultsHandler} />
           </div>
           <div>
             <div>Children</div>
             <div>Ages 2-12</div>
-            <MiniButton sign='-' onClick={decreaseKidsHandler} />
-            {kids > 0 ? kids : 0}
+            <MiniButton sign='-' onClick={decreaseKidsHandler} /> {kids || '0'}
             <MiniButton sign='+' onClick={increaseKidsHandler} />
           </div>
         </span>

@@ -12,45 +12,57 @@ const StyledContainer = styled.section`
   column-gap: 1.5%;
 
   & .error {
-    ${'' /* position: relative; */}
-    ${
-      '' /* margin: auto;
-    width: 100%; */
-    }
     grid-column-start: 1;
     grid-column-end: 4;
     text-align: center;
   }
 `;
 
+const StyledSubHeader = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  position: relative;
+  margin: auto;
+  padding-bottom: 32px;
+
+  & .subheader {
+    font-weight: 700;
+    font-size: 24px;
+  }
+`;
+
 const Container = ({ city, guests }) => {
-  const filteredStays = stays.filter((stay) => {
-    return stay.city === city && stay.maxGuests >= guests;
-  });
+
+  let filteredStays = stays
+  if (city && guests){
+    filteredStays = stays.filter((stay) => {
+      return stay.city === city && stay.maxGuests >= guests;
+    });
+  }
   return (
-    <StyledContainer>
-      {filteredStays.length > 1 ? (
-        filteredStays.map((stay) => {
-          return <Stay key={stays.indexOf(stay)} stay={stay} />;
-        })
-      ) : (
-        <div className='error'>
-          <h1> Whoops! We don't have any accomodation available for you.</h1>
-          <h4>Please refine your search or come back again to see the lastest availability.</h4>
-        </div>
-      )}
-    </StyledContainer>
+    <>
+      <StyledSubHeader>
+        <span className='subheader'>Stays in Finland </span>
+        <span>{filteredStays.length} stays</span>
+      </StyledSubHeader>
+      <StyledContainer>
+        {filteredStays.length > 1 ? (
+          filteredStays.map((stay) => {
+            return <Stay key={stays.indexOf(stay)} stay={stay} />;
+          })
+        ) : (
+          <div className='error'>
+            <h1> Whoops! We don't have any accomodation available for you.</h1>
+            <h4>
+              Please refine your search or come back again to see the lastest
+              availability.
+            </h4>
+          </div>
+        )}
+      </StyledContainer>
+    </>
   );
 };
 
 export default Container;
-
-// city": "Helsinki",
-//     "country": "Finland",
-//     "superHost": false,
-//     "title": "Stylist apartment in center of the city",
-//     "rating": 4.4,
-//     "maxGuests": 3,
-//     "type": "Entire apartment",
-//     "beds": 2,
-//     "photo": "http
