@@ -22,8 +22,6 @@ const StyledHeader = styled.header`
     & img{
       width: 40%;
       margin: 20px 0;
-      ${'' /* position: relative;
-      bottom: 10%; */}
     }
   }
 `;

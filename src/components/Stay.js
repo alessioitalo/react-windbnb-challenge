@@ -23,7 +23,6 @@ const StyledStay = styled.div`
     font-family: Montserrat;
     font-weight: bold;
     font-size: 12px;
-    ${'' /* line-height: 15px; */}
     padding: 8px 5px;
     margin-right: 15px;
   }
@@ -48,7 +47,6 @@ const StyledStay = styled.div`
   & .photo-overlay{
     width: 100%;
     height: 100%;
-    background-color: white;
     opacity: 0.1;
   }
 

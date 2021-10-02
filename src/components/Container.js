@@ -11,7 +11,7 @@ const StyledContainer = styled.section`
   grid-template-rows: 1fr 1fr;
   column-gap: 1.5%;
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
   }
@@ -32,9 +32,9 @@ const StyledSubHeader = styled.div`
   margin: auto;
   padding-bottom: 32px;
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0;
-  }  
+  }
 
   & .subheader {
     font-weight: 700;
@@ -43,9 +43,13 @@ const StyledSubHeader = styled.div`
 `;
 
 const Container = ({ city, guests }) => {
+  let filteredStays = stays;
 
-  let filteredStays = stays
-  if (city && guests){
+  // TO BE FIXED !
+  // filtering must not be applied on first app launch...
+  // it must work even if only one state is defined (guests || city)
+  
+  if (city && guests) {
     filteredStays = stays.filter((stay) => {
       return stay.city === city && stay.maxGuests >= guests;
     });
@@ -57,8 +61,10 @@ const Container = ({ city, guests }) => {
         <span>{filteredStays.length} stays</span>
       </StyledSubHeader>
       <StyledContainer>
+        {console.log(filteredStays)}
         {filteredStays.length > 1 ? (
           filteredStays.map((stay) => {
+            console.log(`${stay.title} ${stay.maxGuests}`);
             return <Stay key={stays.indexOf(stay)} stay={stay} />;
           })
         ) : (

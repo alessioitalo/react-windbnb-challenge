@@ -14,7 +14,7 @@ const StyledModal = styled.div`
 
 function App() {
   const [city, setCity] = useState('');
-  const [guests, setGuests] = useState(1);
+  const [guests, setGuests] = useState(null);
   const [refineSearch, setRefineSearch] = useState(false);
 
   const setCityHandler = (newCity) => {
@@ -44,17 +44,6 @@ function App() {
       )}
       <Header city={city} toggleRefineSearch={refineSearchHandler} />
       <Container city={city} guests={guests} />
-      <footer>
-        <div align='center'>
-          coded by <a href='https://www.alessioitalo.uk/'>alessioitalo</a>
-        </div>
-        <div align='center'>
-          Solution for a challenge from{' '}
-          <a href='http://devchallenges.io' target='_blank'>
-            Devchallenges.io
-          </a>
-        </div>
-      </footer>
     </div>
   );
 }

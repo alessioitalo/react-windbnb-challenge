@@ -18,6 +18,7 @@ const StyledRefineSearchBar = styled.div`
   & .top {
     display: flex;
     justify-content: center;
+    ${'' /* background: red; */}
   }
 
   & form {
@@ -107,8 +108,47 @@ const StyledRefineSearchBar = styled.div`
     font-weight: 700;
     color: black;
   }
-  & .guests-counter{
+  & .guests-counter {
     padding: 20px 0;
+  }
+
+  @media (max-width: 600px) {
+    & .top {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    & .top span {
+      border-right: 0;
+    }
+
+    & form {
+      ${'' /* padding: 10px 0; */}
+      flex-direction: column;
+      justify-content: space-between;
+      width: 96%;
+      padding: 5px;
+    }
+
+    & input {
+      margin: 1px 0;
+      height: 200%;
+      padding: 20px;
+    }
+
+    & .bottom {
+      width: 100%;
+      margin: 0;
+    }
+
+    & .bottom-half {
+      ${'' /* background: yellow; */}
+    }
+
+    & .btn {
+      display: none;
+      ${'' /* order: 1; */}
+    }
   }
 `;
 
