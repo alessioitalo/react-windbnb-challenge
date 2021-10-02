@@ -31,7 +31,10 @@ const StyledSearch = styled.div`
   cursor: pointer;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  padding: 19px;
+  padding: 0 19px;
+  background: hsla(0,78%,63%,0.1);
+  display: flex;
+  justify-content: center;
 
   & span {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
