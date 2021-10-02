@@ -14,7 +14,6 @@
 - [Features](#features)
 - [How to use](#how-to-use)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 
 ## Overview
@@ -60,6 +59,5 @@ $ npm start
 
 ## Contact
 
-- Website [your-website.com](https://www.alessioitalo.uk)
-- GitHub [@your-username](https://github.com/alessioitalo)
-- Twitter [@your-twitter](https://twitter.com/alessioitalo)
+- Website [alessioitalo.uk](https://www.alessioitalo.uk)
+- Twitter [@alessioitalo](https://twitter.com/alessioitalo)
