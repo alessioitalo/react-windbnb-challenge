@@ -18,7 +18,6 @@ const StyledRefineSearchBar = styled.div`
   & .top {
     display: flex;
     justify-content: center;
-    ${'' /* background: red; */}
   }
 
   & form {
@@ -112,18 +111,32 @@ const StyledRefineSearchBar = styled.div`
     padding: 20px 0;
   }
 
+  & .mobile {
+    display: none;
+  }
+
+  & .visible {
+    opacity: 1;
+  }
+
+  & .hidden {
+    opacity: 0;
+  }
+
   @media (max-width: 600px) {
+    min-width: 30%;
+
     & .top {
       flex-direction: column;
       align-items: center;
     }
 
     & .top span {
-      border-right: 0;
+      border-right: none;
+      margin: 10px 0;
     }
 
     & form {
-      ${'' /* padding: 10px 0; */}
       flex-direction: column;
       justify-content: space-between;
       width: 96%;
@@ -139,15 +152,31 @@ const StyledRefineSearchBar = styled.div`
     & .bottom {
       width: 100%;
       margin: 0;
+      display: flex;
+      flex-direction: column;
     }
 
-    & .bottom-half {
-      ${'' /* background: yellow; */}
-    }
-
-    & .btn {
+    & .desktop {
       display: none;
-      ${'' /* order: 1; */}
+    }
+
+    & .mobile {
+      margin-bottom: 20px;
+      display: flex;
+      align-self: center;
+    }
+
+    & .visible,
+    & .hidden {
+      opacity: 1;
+    }
+
+    & .hidden {
+      display: none;
+    }
+
+    & .visible {
+      display: block;
     }
   }
 `;
@@ -201,7 +230,7 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
   return (
     <StyledRefineSearchBar>
       <div className='top'>
-        <form onSubmit={refineSubmitHandler}>
+        <form>
           <span>
             <label>LOCATION</label>
             <input
@@ -219,7 +248,7 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
             />
           </span>
           <span>
-            <button className='btn'>
+            <button onClick={refineSubmitHandler} className='btn desktop'>
               <FontAwesomeIcon icon={faSearch} color='white' />
               Search
             </button>
@@ -228,8 +257,7 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
       </div>
       <div className='bottom'>
         <span
-          className='bottom-half'
-          style={{ visibility: `${showLocations ? 'visible' : 'hidden'}` }}
+          className={`bottom-half ${showLocations ? 'visible' : 'hidden'}`}
         >
           <ul>
             <li onClick={() => setTemporaryCity('Helsinki')}>
@@ -248,8 +276,7 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
           </ul>
         </span>
         <span
-          className='bottom-half'
-          style={{ opacity: `${showGuests ? 1 : 0}` }}
+          className={`bottom-half ${showGuests ? 'visible' : 'hidden'}`}
         >
           <div>
             <div className='text bold'>Adults</div>
@@ -271,6 +298,10 @@ const Refine = ({ setCityHandler, setGuestsHandler, toggleRefineSearch }) => {
           </div>
         </span>
       </div>
+      <button onClick={refineSubmitHandler} className='btn mobile'>
+        <FontAwesomeIcon icon={faSearch} color='white' />
+        Search
+      </button>
     </StyledRefineSearchBar>
   );
 };

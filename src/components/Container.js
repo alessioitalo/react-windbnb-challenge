@@ -44,16 +44,15 @@ const StyledSubHeader = styled.div`
 
 const Container = ({ city, guests }) => {
   let filteredStays = stays;
-
-  // TO BE FIXED !
-  // filtering must not be applied on first app launch...
-  // it must work even if only one state is defined (guests || city)
   
-  if (city && guests) {
-    filteredStays = stays.filter((stay) => {
-      return stay.city === city && stay.maxGuests >= guests;
-    });
+  if (city) {
+    filteredStays = filteredStays.filter((stay) => (stay.city === city))
   }
+
+  if (guests){
+    filteredStays = filteredStays.filter((stay)=>(stay.maxGuests >= guests))
+  }
+
   return (
     <>
       <StyledSubHeader>
@@ -61,10 +60,8 @@ const Container = ({ city, guests }) => {
         <span>{filteredStays.length} stays</span>
       </StyledSubHeader>
       <StyledContainer>
-        {console.log(filteredStays)}
         {filteredStays.length > 1 ? (
           filteredStays.map((stay) => {
-            console.log(`${stay.title} ${stay.maxGuests}`);
             return <Stay key={stays.indexOf(stay)} stay={stay} />;
           })
         ) : (
